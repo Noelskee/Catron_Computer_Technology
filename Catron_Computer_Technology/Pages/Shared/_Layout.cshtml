@@ -1,0 +1,304 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="~/src/catron.png" />
+    <title>@ViewData["Title"] - Catron Computer Technology</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Catron_Computer_Technology.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .user-dropdown {
+            position: relative;
+        }
+
+            .user-dropdown .dropdown-menu {
+                right: 0;
+                left: auto;
+                min-width: 220px;
+            }
+
+        .user-info {
+            padding: 10px 15px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+            .user-info .username {
+                font-weight: 600;
+                color: #333;
+                font-size: 0.95rem;
+            }
+
+            .user-info .email {
+                font-size: 0.8rem;
+                color: #6c757d;
+            }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .nav-link.user-link {
+            padding: 5px 10px;
+        }
+
+        .dropdown-item i {
+            margin-right: 8px;
+            width: 20px;
+        }
+    </style>
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+            <div class="container">
+                <div class="logo-wrapper">
+                    <a asp-page="/Index">
+                        <img src="~/src/catron.png" alt="Catron Logo" />
+                    </a>
+                </div>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Index">Home</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="productsDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Products
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-modern" aria-labelledby="productsDropdown">
+                                <li><h6 class="dropdown-header">Computer Devices</h6></li>
+                                <li>
+                                    <a class="dropdown-item" asp-page="/products" asp-route-filter="1">
+                                        <i class="fas fa-laptop me-2"></i>Laptops
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-page="/products" asp-route-filter="2">
+                                        <i class="fas fa-desktop me-2"></i>Desktops
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-page="/products" asp-route-filter="3">
+                                        <i class="fas fa-mobile-alt me-2"></i>Mobile Devices
+                                    </a>
+                                </li>
+
+                                <li><hr class="dropdown-divider"></li>
+                                <li><h6 class="dropdown-header">Supplies</h6></li>
+                                <li>
+                                    <a class="dropdown-item" asp-page="/products" asp-route-filter="4">
+                                        <i class="fas fa-book me-2"></i>School Supplies
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-page="/products" asp-route-filter="5">
+                                        <i class="fas fa-briefcase me-2"></i>Office Supplies
+                                    </a>
+                                </li>
+
+                                <li><hr class="dropdown-divider"></li>
+                                <li><h6 class="dropdown-header">Tech Components</h6></li>
+                                <li>
+                                    <a class="dropdown-item" asp-page="/products" asp-route-filter="6">
+                                        <i class="fas fa-code me-2"></i>Software
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-page="/products" asp-route-filter="7">
+                                        <i class="fas fa-microchip me-2"></i>Hardware
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-page="/products" asp-route-filter="8">
+                                        <i class="fas fa-print me-2"></i>Printers
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/About">About</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Contact">Contact</a>
+                        </li>
+
+                        <li class="nav-item search-wrapper">
+                            <div class="search-box">
+                                <input type="search" class="search-input" placeholder="Search products..." />
+                                <i class="fas fa-search search-icon"></i>
+                            </div>
+                        </li>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <!-- Authenticated User Dropdown -->
+                            <li class="nav-item dropdown user-dropdown">
+                                <a class="nav-link user-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="user-avatar">
+                                        @User.Identity.Name.Substring(0, 1).ToUpper()
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li class="user-info">
+                                        <div class="username">@(User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value ?? User.Identity.Name)</div>
+                                        <div class="email">@User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value</div>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item" asp-page="/Profile">
+                                            <i class="fas fa-user"></i> My Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-page="/Orders">
+                                            <i class="fas fa-shopping-bag"></i> My Orders
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-page="/Wishlist">
+                                            <i class="fas fa-heart"></i> Wishlist
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-page="/Settings">
+                                            <i class="fas fa-cog"></i> Settings
+                                        </a>
+                                    </li>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <a class="dropdown-item" asp-page="/Admin/Dashboard">
+                                                <i class="fas fa-tachometer-alt"></i> Admin Dashboard
+                                            </a>
+                                        </li>
+                                    }
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <form method="post" asp-page="/Login" asp-page-handler="Logout">
+                                            <button type="submit" class="dropdown-item text-danger">
+                                                <i class="fas fa-sign-out-alt"></i> Logout
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <!-- Guest User -->
+                            <li class="nav-item">
+                                <a class="nav-link user-link" asp-page="/Login">
+                                    <i class="fas fa-user"></i>
+                                </a>
+                            </li>
+                        }
+
+                        <li class="nav-item">
+                            <a class="btn btn-cart position-relative" asp-page="/checkout">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success" id="cartCount">
+                                    0
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="row py-5">
+                <div class="col-lg-4 mb-4">
+                    <img src="~/src/catron.png" alt="Catron Logo" style="width: 150px; margin-bottom: 20px; background: white;">
+                    <p class="text-muted">Your leading computer supplier in the Philippines. Quality products, exceptional service.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a asp-page="/Index">Home</a></li>
+                        <li><a asp-page="/products">Products</a></li>
+                        <li><a asp-page="/About">About Us</a></li>
+                        <li><a asp-page="/Contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5>Customer Service</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 mb-4">
+                    <h5>Contact Info</h5>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-map-marker-alt"></i>KimRose Residences VRama Ave. Guadalupe, Cebu City, Philippines</li>
+                        <li><i class="fas fa-phone"></i> +63 908 515 4932</li>
+                        <li><i class="fas fa-envelope"></i>cathy.catron18@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p>&copy; 2026 Catron Computer Technology. All rights reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/addCart.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

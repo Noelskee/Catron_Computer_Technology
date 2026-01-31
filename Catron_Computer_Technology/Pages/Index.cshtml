@@ -1,0 +1,243 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="particles" id="particles"></div>
+
+<!-- Hero -->
+<section class="home-hero" id="hero">
+    <div class="hero-content">
+        <span class="hero-label">WELCOME TO</span>
+        <h1>Catron Computer Technology</h1>
+        <p>Your Leading Computer Suppliers in the Philippines</p>
+        <a class="hero-btn" asp-page="/products">
+            <i class="fas fa-shopping-bag me-2"></i>Shop Now
+        </a>
+    </div>
+    <div class="scroll-indicator">
+        <i class="fas fa-chevron-down"></i>
+    </div>
+</section>
+
+<!-- Highlights -->
+<section class="home-highlight">
+    <div class="highlight-card">
+        <i class="fas fa-tags"></i>
+        <h2>Affordable Supplies</h2>
+        <p>Quality products at competitive prices. Get the best value for your money.</p>
+    </div>
+    <div class="highlight-card">
+        <i class="fas fa-percentage"></i>
+        <h2>Amazing Discounts</h2>
+        <p>Save up to 50% on selected items. Exclusive deals for our customers.</p>
+    </div>
+    <div class="highlight-card">
+        <i class="fas fa-shipping-fast"></i>
+        <h2>Free Delivery</h2>
+        <p>Enjoy free shipping on all orders. Fast and reliable service.</p>
+    </div>
+</section>
+
+<!-- Categories -->
+<section class="categories-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Explore Categories</h2>
+            <p>Find the perfect tech solutions</p>
+        </div>
+    </div>
+    <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="category-slide">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1920" class="category-image" alt="Gaming">
+                    <div class="category-overlay">
+                        <span class="category-badge">TRENDING</span>
+                        <h3>Gaming</h3>
+                        <p>Hundreds of titles available for your enjoyment</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="category-slide">
+                    <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=1920" class="category-image" alt="Laptops">
+                    <div class="category-overlay">
+                        <span class="category-badge">POPULAR</span>
+                        <h3>Laptops</h3>
+                        <p>Portable computing power you can take anywhere</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="category-slide">
+                    <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=1920" class="category-image" alt="Components">
+                    <div class="category-overlay">
+                        <span class="category-badge">BUILD PC</span>
+                        <h3>PC Components</h3>
+                        <p>Build your dream machine with quality parts</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" data-bs-target="#carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" data-bs-target="#carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+</section>
+
+<!-- Featured Products (Static) -->
+<section class="featured-section" id="featured">
+    <div class="container">
+        <div class="section-title">
+            <h2>Featured Products</h2>
+            <p>Top picks from our collection</p>
+        </div>
+        <div class="products-grid" id="featuredProducts">
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600" class="product-image" alt="Laptop">
+                    <span class="product-badge hot">HOT</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Laptops</div>
+                    <h3 class="product-title">Dell XPS 15</h3>
+                    <div class="product-price">₱65,999</div>
+                    <button class="btn-add-cart" data-product-id="1" data-product-name="Dell XPS 15" data-product-price="65999">
+                        <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                    </button>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=600" class="product-image" alt="Keyboard">
+                    <span class="product-badge new">NEW</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Accessories</div>
+                    <h3 class="product-title">Gaming Keyboard RGB</h3>
+                    <div class="product-price">₱3,499</div>
+                    <button class="btn-add-cart" data-product-id="2" data-product-name="Gaming Keyboard RGB" data-product-price="3499">
+                        <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                    </button>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=600" class="product-image" alt="GPU">
+                    <span class="product-badge sale">SALE</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Components</div>
+                    <h3 class="product-title">RTX 4080 Graphics Card</h3>
+                    <div class="product-price">₱85,999</div>
+                    <button class="btn-add-cart" data-product-id="3" data-product-name="RTX 4080 Graphics Card" data-product-price="85999">
+                        <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Recommended Products (Dynamic from recommendations.js) -->
+<section class="recommended-section" id="recommendations" style="display: block;">
+    <div class="container">
+        <div class="section-title">
+            <h2>Recommended For You</h2>
+            <p>Personalized picks based on your interests</p>
+        </div>
+        <div class="products-grid" id="recommendedProducts">
+            <!-- Dynamic content will be loaded here by recommendations.js -->
+            <div class="loading-placeholder">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading recommendations...</span>
+                </div>
+                <p class="mt-3">Loading personalized recommendations...</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Best Sellers -->
+<section class="bestsellers-section" id="bestsellers">
+    <div class="container">
+        <div class="section-title">
+            <h2>Best Sellers</h2>
+            <p>Most popular products this month</p>
+        </div>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600" class="product-image" alt="Monitor">
+                    <span class="product-badge bestseller">BEST SELLER</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Monitors</div>
+                    <h3 class="product-title">4K Gaming Monitor 27"</h3>
+                    <div class="product-price">₱28,999</div>
+                    <button class="btn-add-cart" data-product-id="4" data-product-name="4K Gaming Monitor 27" data-product-price="28999">
+                        <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                    </button>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600" class="product-image" alt="Mouse">
+                    <span class="product-badge bestseller">BEST SELLER</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Accessories</div>
+                    <h3 class="product-title">Wireless Gaming Mouse</h3>
+                    <div class="product-price">₱2,299</div>
+                    <button class="btn-add-cart" data-product-id="5" data-product-name="Wireless Gaming Mouse" data-product-price="2299">
+                        <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                    </button>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600" class="product-image" alt="Headset">
+                    <span class="product-badge bestseller">BEST SELLER</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Audio</div>
+                    <h3 class="product-title">7.1 Surround Gaming Headset</h3>
+                    <div class="product-price">₱4,999</div>
+                    <button class="btn-add-cart" data-product-id="6" data-product-name="7.1 Surround Gaming Headset" data-product-price="4999">
+                        <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="newsletter-section">
+    <div class="container">
+        <div class="newsletter-content">
+            <div class="newsletter-text">
+                <i class="fas fa-envelope-open-text"></i>
+                <h2>Stay Updated</h2>
+                <p>Subscribe to our newsletter for exclusive deals and updates</p>
+            </div>
+            <div class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Enter your email address">
+                <button class="newsletter-btn">
+                    <i class="fas fa-paper-plane me-2"></i>Subscribe
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/addProduct.js" asp-append-version="true"></script>
+    <!-- Load recommendations script -->
+    <script src="~/js/recommendations.js" asp-append-version="true"></script>
+}

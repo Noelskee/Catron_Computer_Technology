@@ -1,0 +1,93 @@
+﻿@page
+@model Catron_Computer_Technology.Pages.checkoutModel
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+<link rel="stylesheet" href="~/css/checkout.css" />
+
+<section class="checkout-hero">
+    <div class="container">
+        <h1>Shopping Cart</h1>
+        <p>Review your items before checkout</p>
+    </div>
+</section>
+
+<div class="container checkout-wrapper">
+    <div class="row g-4">
+        <!-- CART ITEMS -->
+        <div class="col-lg-8">
+            <div class="cart-card">
+                <div class="cart-header">
+                    <h3>
+                        <i class="fas fa-shopping-cart"></i>
+                        Your Cart (<span id="itemCount">0</span>)
+                    </h3>
+                    <a href="/products" class="back-link">
+                        <i class="fas fa-arrow-left"></i> Continue Shopping
+                    </a>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="cartItems"></tbody>
+                    </table>
+                </div>
+
+                <div id="emptyCart" class="empty-cart" style="display:none;">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h4>Your cart is empty</h4>
+                    <a href="/products" class="btn-primary">Shop Now</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUMMARY -->
+        <div class="col-lg-4">
+            <div class="summary-card">
+                <h4>Order Summary</h4>
+
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal">₱0</span>
+                </div>
+
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span id="shipping">₱150</span>
+                </div>
+
+                <div class="summary-row discount">
+                    <span>Discount</span>
+                    <span id="discount">-₱0</span>
+                </div>
+
+                <div class="summary-total">
+                    <span>Total</span>
+                    <strong id="finalTotal">₱0</strong>
+                </div>
+
+                <button id="checkoutBtn" class="checkout-btn">
+                    <i class="fas fa-lock"></i> Secure Checkout
+                </button>
+
+                <p class="secure-text">
+                    <i class="fas fa-shield-alt"></i> Safe & Encrypted Payments
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/checkout.js" asp-append-version="true"></script>
+}

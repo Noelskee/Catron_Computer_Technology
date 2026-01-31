@@ -1,0 +1,112 @@
+﻿products-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 4rem 0;
+    color: white;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.products-hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+input[type="range"]{
+    accent-color: green;
+}
+
+.filter-sidebar {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 100px;
+}
+
+.filter-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+    .filter-title i {
+        color: #00cc44;
+    }
+
+.accordion-button {
+    font-weight: 600;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+    .accordion-button:not(.collapsed) {
+        background-color: #00cc44;
+        color: white;
+    }
+
+.form-check-input:checked {
+    background-color: #00cc44;
+    border-color: #00cc44;
+}
+
+.product-card {
+    transition: all 0.3s ease;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(0, 204, 68, 0.2);
+    }
+
+.product-image-wrapper {
+    position: relative;
+    height: 250px;
+    background: #f8f9fa;
+    overflow: hidden;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 20px;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.1);
+}
+
+.sort-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+}
+
+.results-count {
+    color: #666;
+    font-size: 14px;
+}
+
+.no-products {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #999;
+}
+
+    .no-products i {
+        font-size: 4rem;
+        color: #e0e0e0;
+        margin-bottom: 1rem;
+    }

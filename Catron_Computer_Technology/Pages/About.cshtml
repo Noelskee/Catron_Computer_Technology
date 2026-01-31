@@ -1,0 +1,374 @@
+﻿@page
+@model Catron_Computer_Technology.Pages.AboutModel
+@{
+    ViewData["Title"] = "About Us - Catron Computer Technology";
+}
+<link rel="stylesheet" href="~/css/about.css" />
+
+<!-- Hero Section -->
+<section class="about-hero animate fade">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1 class="hero-title">About Catron Computer Technology</h1>
+        <p class="hero-subtitle">Your Trusted Partner in Technology Solutions Since 2020</p>
+        <div class="hero-stats">
+            <div class="stat-item">
+                <span class="stat-number">5+</span>
+                <span class="stat-label">Years of Excellence</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">10K+</span>
+                <span class="stat-label">Happy Customers</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">500+</span>
+                <span class="stat-label">Products</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Company Introduction -->
+<section class="company-intro">
+    <div class="container">
+        <div class="intro-grid">
+            <div class="intro-image animate slide-left">
+                <img src="~/src/catron.png" alt="Catron Computer Technology" />
+                <div class="image-badge">
+                    <i class="fas fa-award"></i>
+                    <span>Certified Technology Provider</span>
+                </div>
+            </div>
+            <div class="intro-content animate slide-right">
+                <span class="section-label">Who We Are</span>
+                <h2>Leading Computer Suppliers in the Philippines</h2>
+                <p>Catron Computer Technology is a premier supplier of computer hardware, software, and technology solutions in Cebu City and throughout the Philippines. Founded with a vision to make quality technology accessible to everyone, we have grown from a small shop to a trusted name in the industry.</p>
+                <p>We specialize in providing comprehensive technology solutions for students, professionals, businesses, and institutions. Our commitment to quality products, competitive pricing, and exceptional customer service has made us the preferred choice for thousands of satisfied customers.</p>
+                <div class="intro-features">
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Genuine Products</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Expert Support</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Warranty Assured</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Competitive Pricing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission, Vision, Values -->
+<section class="mvv-section">
+    <div class="container">
+        <div class="mvv-grid">
+            <div class="mvv-card animate zoom" data-delay="1">
+                <div class="mvv-icon">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <h3>Our Mission</h3>
+                <p>To provide high-quality, affordable technology solutions that empower individuals and businesses to achieve their goals through innovation and exceptional service.</p>
+            </div>
+            <div class="mvv-card animate zoom" data-delay="2">
+                <div class="mvv-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <h3>Our Vision</h3>
+                <p>To be the most trusted and preferred technology provider in the Philippines, recognized for excellence, innovation, and customer satisfaction.</p>
+            </div>
+            <div class="mvv-card animate zoom" data-delay="3">
+                <div class="mvv-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h3>Our Values</h3>
+                <ul>
+                    <li><strong>Integrity:</strong> Honest and ethical in all dealings</li>
+                    <li><strong>Quality:</strong> Never compromise on product standards</li>
+                    <li><strong>Service:</strong> Customer satisfaction is our priority</li>
+                    <li><strong>Innovation:</strong> Embrace technology advancement</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- What We Offer -->
+<section class="offerings-section">
+    <div class="container">
+        <div class="section-header animate fade">
+            <span class="section-label">Our Services</span>
+            <h2>What We Offer</h2>
+            <p>Comprehensive technology solutions tailored to your needs</p>
+        </div>
+        <div class="offerings-grid">
+            <div class="offering-card animate slide-up" data-delay="1" onclick="openDetails('computers')">
+                <div class="offering-image">
+                    <img src="~/image/laptop-category.jpg" alt="Computers & Laptops" />
+                    <div class="offering-overlay">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                </div>
+                <h3>Computers & Laptops</h3>
+                <p>Latest models from top brands with warranty and support</p>
+            </div>
+            <div class="offering-card animate slide-up" data-delay="2" onclick="openDetails('accessories')">
+                <div class="offering-image">
+                    <img src="~/image/accessories-category.jpg" alt="Accessories" />
+                    <div class="offering-overlay">
+                        <i class="fas fa-keyboard"></i>
+                    </div>
+                </div>
+                <h3>Accessories & Peripherals</h3>
+                <p>Complete range of computer accessories and peripherals</p>
+            </div>
+            <div class="offering-card animate slide-up" data-delay="3" onclick="openDetails('supplies')">
+                <div class="offering-image">
+                    <img src="~/image/supplies-category.jpg" alt="Supplies" />
+                    <div class="offering-overlay">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                </div>
+                <h3>Office & School Supplies</h3>
+                <p>Everything you need for office and school work</p>
+            </div>
+            <div class="offering-card animate slide-up" data-delay="4" onclick="openDetails('services')">
+                <div class="offering-image">
+                    <img src="~/image/services-category.jpg" alt="Services" />
+                    <div class="offering-overlay">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                </div>
+                <h3>Repair & Maintenance</h3>
+                <p>Professional repair and maintenance services</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Organizational Chart -->
+<section class="org-chart-section">
+    <div class="container">
+        <div class="section-header animate fade">
+            <span class="section-label">Our Team</span>
+            <h2>Organizational Structure</h2>
+            <p>Meet the dedicated team behind Catron Computer Technology</p>
+        </div>
+        
+        <div class="org-chart animate zoom" data-delay="1">
+            <!-- Level 1: CEO -->
+            <div class="org-level level-1">
+                <div class="org-member">
+                    <div class="member-photo">
+                        <img src="https://scontent.fceb6-2.fna.fbcdn.net/v/t39.30808-6/480683258_2964464200377774_167108567339242088_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeGZmL_TLlPGzXg_k8wlRZE6R1jlAAmBVrVHWOUACYFWtcU1Zw7g8PoL6AsmFwldGv_cj-thAkl5P2GAQWMaUjz8&_nc_ohc=fEHTroe2cfcQ7kNvwGim-r9&_nc_oc=AdmNXYF3cUmOS8WY9qXs6OAKbM0-RFJIQGfomYN4jiIa4mTFfp_i96HmbSj3xfHRMuU&_nc_zt=23&_nc_ht=scontent.fceb6-2.fna&_nc_gid=HUGX86BBJi8DN4_WQOwvFA&oh=00_AfusOIKz9gSkH6VmGWLEaLJqXu9IbHWqP0DzoanIvSeg8A&oe=6983B8D7"/>
+                    </div>
+                    <h4>Amy C. Reyes </h4>
+                    <p>Founder & CEO</p>
+                </div>
+            </div>
+
+            <!-- Level 2: Department Heads -->
+            <div class="org-level level-2">
+                <div class="org-member">
+                    <div class="member-photo">
+                        <img src="https://scontent.fceb2-1.fna.fbcdn.net/v/t1.15752-9/617484168_1415470603460719_542886574358459842_n.jpg?stp=dst-jpg_p2048x2048_tt6&_nc_cat=100&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeF4zGcv8Ks55B92Z0MUuzcnQ-TRLcU1JcRD5NEtxTUlxGt_zwes5YN8XKFgFkn_fq-NT62yr1s8JG6lN5thauZl&_nc_ohc=g7LgcqLBeqoQ7kNvwEXc0pv&_nc_oc=AdkwviZfLMYtKP1N4Xz0rOjZVjC4di3ZURufyNhP5dd_aVEgMeGWuHP8S0OnEYoYIr4&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fceb2-1.fna&oh=03_Q7cD4gGgAW1as4Zr6AYzaV-acKcnG6Sdnz4lJYsq09RQogCAoA&oe=69A57E4B"/>
+                    </div>
+                    <h4>Riza Jane Moran </h4>
+                    <p>Accounting</p>
+                </div>
+                <div class="org-member">
+                    <div class="member-photo">
+                        <img src="blob:https://www.facebook.com/886c64b2-5f8d-4acb-ae51-cf35eaf7fb8e"/>
+                    </div>
+                    <h4>Mary Racaza</h4>
+                    <p>Sales Executive</p>
+                </div>
+                <div class="org-member">
+                    <div class="member-photo">
+                        <img src="https://scontent.fceb6-3.fna.fbcdn.net/v/t39.30808-1/605523174_3301289843361873_4537697510488445808_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=105&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeF7m7fld8O_2_B7rYteI2uxbEkNvSONC1tsSQ29I40LW41QuPyUKklc7Uf5ka3lXiPaVgAql5pUksP6ZAW81lev&_nc_ohc=mfkSTJMWqZoQ7kNvwGhog9u&_nc_oc=Adk0OiecTUdwk5zPJoP4w8ipM5ZjzjwMyHn3fGmpL4PZRm2orqpYRaw55RMM94KHRb4&_nc_zt=24&_nc_ht=scontent.fceb6-3.fna&_nc_gid=TLBTqozNt9uD-jHWxZGwIg&oh=00_Aft9ABdxSPdnhBETY00dOrOec1AwBwn9jWJkjTUn5FJUog&oe=6983E682"/>
+                    </div>
+                    <h4>Catherine Joan Reyes</h4>
+                    <p>Sales Executive</p>
+                </div>
+            </div>
+
+            <!-- Level 3: Team Members -->
+            <div class="org-level level-3">
+                <div class="org-group">
+                    <h5><i class="fas fa-users"></i> Operations Team</h5>
+                    <div class="team-members">
+                        <span class="team-badge">Inventory Staff</span>
+                        <span class="team-badge">Logistics</span>
+                        <span class="team-badge">Quality Control</span>
+                    </div>
+                </div>
+                <div class="org-group">
+                    <h5><i class="fas fa-users"></i> Technical Team</h5>
+                    <div class="team-members">
+                        <span class="team-badge">Technicians</span>
+                        <span class="team-badge">Support Staff</span>
+                        <span class="team-badge">Web Admin</span>
+                    </div>
+                </div>
+                <div class="org-group">
+                    <h5><i class="fas fa-users"></i> Sales Team</h5>
+                    <div class="team-members">
+                        <span class="team-badge">Sales Associates</span>
+                        <span class="team-badge">Customer Service</span>
+                        <span class="team-badge">Marketing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="why-choose-section">
+    <div class="container">
+        <div class="section-header animate fade">
+            <span class="section-label">Why Choose Us</span>
+            <h2>What Makes Us Different</h2>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card animate slide-up" data-delay="1">
+                <div class="feature-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3>Prime Location</h3>
+                <p>Located at KimRose Residences VRama Ave. Guadalupe, Cebu City - easily accessible from anywhere in the metro</p>
+            </div>
+            <div class="feature-card animate slide-up" data-delay="2">
+                <div class="feature-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <h3>Genuine Products</h3>
+                <p>100% authentic products from authorized distributors with full manufacturer warranty</p>
+            </div>
+            <div class="feature-card animate slide-up" data-delay="3">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>Expert Support</h3>
+                <p>Knowledgeable staff ready to assist with product selection, setup, and troubleshooting</p>
+            </div>
+            <div class="feature-card animate slide-up" data-delay="4">
+                <div class="feature-icon">
+                    <i class="fas fa-tag"></i>
+                </div>
+                <h3>Competitive Pricing</h3>
+                <p>Best prices in the market with flexible payment options and special discounts</p>
+            </div>
+            <div class="feature-card animate slide-up" data-delay="5">
+                <div class="feature-icon">
+                    <i class="fas fa-shipping-fast"></i>
+                </div>
+                <h3>Fast Delivery</h3>
+                <p>Same-day delivery available for Cebu City and fast shipping nationwide</p>
+            </div>
+            <div class="feature-card animate slide-up" data-delay="6">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Secure Transactions</h3>
+                <p>Safe and secure payment processing with buyer protection guarantee</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--Proel4W Porject--->
+<section class="org-chart-section">
+    <div class="container">
+        <div class="section-header animate fade">
+            <span class="section-label">PROEL4W  Final Projects Members</span>
+            <h2>Organizational Structure</h2>
+            <p>Meet the PROEL4W Project Members</p>
+        </div>
+        
+        <div class="org-chart animate zoom" data-delay="1">
+            <!-- Level 1: CEO -->
+            <div class="org-level level-1">
+                <div class="org-member">
+                    <div class="member-photo">
+                        <img src="https://scontent.fceb2-1.fna.fbcdn.net/v/t39.30808-1/444839220_3524712454444095_7560104842761861860_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=103&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeEvxUzqQb6Hsyl15Ex1MCWP3h_k75yFPCveH-TvnIU8KzlBO_XcscGOFJE-Yjivkqo3AstzuR022940NLHqGclv&_nc_ohc=5rxnQiAuaqQQ7kNvwH1AKeU&_nc_oc=AdlM6RAKHTHzPVeKCV9SH9e3yNankSpXkB0PS7sUL3gVUE8I3PJrhvz8VOxUTE1M_hk&_nc_zt=24&_nc_ht=scontent.fceb2-1.fna&_nc_gid=H3Izpwwmh2OG7HD8W9UaWg&oh=00_AftYadWNVAOTLxD1Uav5Uk5hCo7BJnT-HYR-xXF-1tBc2Q&oe=6983E6CD"/>
+                    </div>
+                    <h4>Noel Earl G. Borinaga</h4>
+                    <p>Programmer</p>
+                </div>
+            </div>
+
+            
+            <div class="org-level level-2">
+                <div class="org-member">
+                    <div class="member-photo">
+                        <img src="https://scontent.fceb6-2.fna.fbcdn.net/v/t39.30808-1/475423919_1387500298879126_2702372912997859056_n.jpg?stp=c13.0.514.515a_dst-jpg_s200x200_tt6&_nc_cat=109&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeGCW2W4F9y-jD0DSeZBwFWWBwrs2YFT-KYHCuzZgVP4ptaFxopb91fyqPY_a4yWxj__WYyfBHY0AG8chpUicRCJ&_nc_ohc=vsNNz-qmzo4Q7kNvwHGXOle&_nc_oc=AdmoQjm4tqFSq4nH6w9ZmpyaqKcijYmbvR6JRhPts5bXxYUu6rG7BBWPbbxfHVQDNfw&_nc_zt=24&_nc_ht=scontent.fceb6-2.fna&_nc_gid=AUI4ZQVbO7qRtpgjXyZqKw&oh=00_AfvWUz1MIp7a3yW7b9KHQldvWzR6E09CIsL_1k0VSj79JQ&oe=6983DB77"/>
+                    </div>
+                    <h4>Kyle Dayao </h4>
+                    <p>UI Designer</p>
+                </div>
+                <div class="org-member">
+                    <div class="member-photo">
+                        <img src="https://scontent.fmnl8-3.fna.fbcdn.net/v/t39.30808-1/603811061_1558990702034710_9219932180084309498_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=110&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeFEgj7EymXsQpELnZcO5ZA83YTkMJY0zTPdhOQwljTNMzJvlEQmv29oZq8t0x7zRHB74p0xge5j7LG6gJtEa4s8&_nc_ohc=yWRKv0f1zp4Q7kNvwGJ33HU&_nc_oc=AdnDp-QxDMuXN_cb5NBDr82S6ZMY4Zc6QayUIa3LjKrn2i8e8CKD552R51ZAxAUmMoo&_nc_zt=24&_nc_ht=scontent.fmnl8-3.fna&_nc_gid=qT1u-DpB9SKIbgB62_b4mQ&oh=00_AfuibYeLQyNXDhHqwpKQJan5IsFSzA2XYMb0A1b2Kns4rw&oe=6983BCC8"/>
+                    </div>
+                    <h4>Leah Shanine Tomaquin</h4>
+                    <p>UI Designer</p>
+                </div>
+                <div class="org-member">
+                    <div class="member-photo">
+                        <img src="https://scontent.fceb6-2.fna.fbcdn.net/v/t39.30808-6/586569160_1705712790391926_6752404965079477287_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEeej94ow0OJTwqD34CQT-SJswWbu7aw54mzBZu7trDnvqeAOQjXir3yTYCOpjx6_dDH7n3wERSp_IouFGazDqD&_nc_ohc=6ruZgZ96-hcQ7kNvwEanLFU&_nc_oc=AdndZDDqFZc_l6N1JKxYclyuh7nedTf1wE4o0HrC3zGR0UkhGl-bfJkRIFVmFLQ2Vm0&_nc_zt=23&_nc_ht=scontent.fceb6-2.fna&_nc_gid=xqoJlHK2h1WC25RS6NFJkQ&oh=00_Afu-yC8_Pz3NXlf0UK1U1d_bu3ex_Q5ZZNs0ZDbqbsDxcg&oe=6983D59B"/>
+                    </div>
+                    <h4>Maryill Palabon Delacalzada</h4>
+                    <p>Database</p>
+                </div>
+            </div>
+
+            <!-- Level 3: Team Members -->
+            <div class="org-level level-3">
+                <div class="org-group">
+                    <h5><i class="fas fa-users"></i> Operations Team</h5>
+                    <div class="team-members">
+                        <span class="team-badge">Inventory Staff</span>
+                        <span class="team-badge">Logistics</span>
+                        <span class="team-badge">Quality Control</span>
+                    </div>
+                </div>
+                <div class="org-group">
+                    <h5><i class="fas fa-users"></i> Technical Team</h5>
+                    <div class="team-members">
+                        <span class="team-badge">Technicians</span>
+                        <span class="team-badge">Support Staff</span>
+                        <span class="team-badge">Web Admin</span>
+                    </div>
+                </div>
+                <div class="org-group">
+                    <h5><i class="fas fa-users"></i> Sales Team</h5>
+                    <div class="team-members">
+                        <span class="team-badge">Sales Associates</span>
+                        <span class="team-badge">Customer Service</span>
+                        <span class="team-badge">Marketing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Details Modal -->
+<div class="details-modal" id="detailsModal" onclick="closeDetails()">
+    <div class="details-content" onclick="event.stopPropagation()">
+        <button class="close-btn" onclick="closeDetails()">×</button>
+        <div id="modalContent"></div>
+    </div>
+</div>
+
+<script src="~/js/about.js"></script>
