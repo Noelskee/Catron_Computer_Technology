@@ -3,15 +3,15 @@
 @{
     ViewData["Title"] = "Login";
 }
-<link rel="stylesheet" href="~/css/login.css" />
+<link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
 
 <div class="login-page-wrapper">
-    <div class="logincontainer @(Model.SuccessMessage != null ? "" : (TempData["ShowRegister"] != null ? "active" : ""))">
+    <div class="logincontainer @(TempData["ShowRegister"] != null ? "active" : "")">
 
         <!-- Login Form -->
         <div class="form-box login">
             <form method="post" asp-page-handler="Login" id="loginForm">
-                <img src="~/src/catron.png">
+                <img src="~/src/catron.png" alt="Catron Logo" />
                 <h1>Login</h1>
 
                 @if (Model.SuccessMessage != null)
@@ -35,21 +35,26 @@
                     <i class="fa-solid fa-user"></i>
                     <span asp-validation-for="LoginInput.Username" class="text-danger"></span>
                 </div>
+
                 <div class="input-box">
                     <input type="password" asp-for="LoginInput.Password" id="loginPassword" placeholder="Password" required />
                     <i class="fa-solid fa-lock"></i>
                     <span asp-validation-for="LoginInput.Password" class="text-danger"></span>
                 </div>
+
                 <div class="forgot-link">
                     <a href="#">Forget Password?</a>
                 </div>
+
                 <button type="submit" class="btn">
                     <span class="btn-text">Sign In</span>
                     <span class="btn-spinner" style="display:none;">
                         <i class="fa-solid fa-spinner fa-spin"></i>
                     </span>
                 </button>
+
                 <p>Or login with social platforms</p>
+
                 <div class="social-icons">
                     <a href="#"><i class="fa-brands fa-google"></i></a>
                     <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
@@ -59,10 +64,10 @@
             </form>
         </div>
 
-        <!-- Register Form -->
+        <!-- Registration Form -->
         <div class="form-box register">
             <form method="post" asp-page-handler="Register" id="registerForm">
-                <img src="~/src/catron.png">
+                <img src="~/src/catron.png" alt="Catron Logo" />
                 <h1>Registration</h1>
 
                 @if (Model.ErrorMessage != null && TempData["ShowRegister"] != null)
@@ -78,29 +83,35 @@
                     <i class="fa-solid fa-user"></i>
                     <span asp-validation-for="RegisterInput.Username" class="text-danger"></span>
                 </div>
+
                 <div class="input-box">
                     <input type="email" asp-for="RegisterInput.Email" id="registerEmail" placeholder="Email" required />
                     <i class="fa-solid fa-envelope"></i>
                     <span asp-validation-for="RegisterInput.Email" class="text-danger"></span>
                 </div>
+
                 <div class="input-box">
                     <input type="password" asp-for="RegisterInput.Password" id="registerPassword" placeholder="Password" required />
                     <i class="fa-solid fa-lock"></i>
                     <span asp-validation-for="RegisterInput.Password" class="text-danger"></span>
                     <small class="password-hint text-muted">Min 6 chars, 1 uppercase, 1 lowercase, 1 number, 1 special char</small>
                 </div>
+
                 <div class="input-box">
                     <input type="password" asp-for="RegisterInput.ConfirmPassword" id="registerConfirmPassword" placeholder="Confirm Password" required />
                     <i class="fa-solid fa-lock"></i>
                     <span asp-validation-for="RegisterInput.ConfirmPassword" class="text-danger"></span>
                 </div>
+
                 <button type="submit" class="btn">
                     <span class="btn-text">Register</span>
                     <span class="btn-spinner" style="display:none;">
                         <i class="fa-solid fa-spinner fa-spin"></i>
                     </span>
                 </button>
+
                 <p>Or register with social platforms</p>
+
                 <div class="social-icons">
                     <a href="#"><i class="fa-brands fa-google"></i></a>
                     <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
@@ -110,7 +121,7 @@
             </form>
         </div>
 
-        <!-- Toggle Box -->
+        <!-- Toggle Panel -->
         <div class="toggle-box">
             <div class="toggle-panel toggle-left">
                 <h1>Hello, Welcome!</h1>
@@ -128,5 +139,5 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/login.js"></script>
+    <script src="~/js/login.js" asp-append-version="true"></script>
 }
