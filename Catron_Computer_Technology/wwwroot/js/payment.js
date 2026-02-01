@@ -1,19 +1,15 @@
-// payment.js - Payment and order placement for payment.cshtml
+// payment.js - Enhanced with backend integration
 
 (async function () {
-    // DOM Elements
     const placeOrderBtn = document.getElementById('placeOrder');
-    const productOrderSection = document.querySelector('.section h3');
-
-    // Find the products section
     let productSection = null;
+
     document.querySelectorAll('.section').forEach(section => {
         if (section.querySelector('h3')?.textContent.includes('Product Ordered')) {
             productSection = section;
         }
     });
 
-    // Initialize payment page
     function initializePayment() {
         renderOrderSummary();
         attachEventListeners();
@@ -21,7 +17,6 @@
         updateCartCount();
     }
 
-    // Render order summary
     function renderOrderSummary() {
         if (!productSection) {
             console.error("Product section not found");
@@ -31,7 +26,6 @@
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
         const totalDiv = productSection.querySelector('.total');
 
-        // Remove existing product displays
         productSection.querySelectorAll('.product').forEach(p => p.remove());
 
         if (cart.length === 0) {
@@ -70,7 +64,6 @@
             productSection.insertBefore(productDiv, totalDiv);
         });
 
-        // Add shipping
         const shipping = 150;
         grandTotal += shipping;
 
@@ -93,7 +86,6 @@
         }
     }
 
-    // Setup payment method toggle
     function setupPaymentMethodToggle() {
         const paymentRadios = document.querySelectorAll('input[name="payment"]');
         const creditDebitInfo = document.getElementById('creditDebitInfo');
@@ -106,17 +98,21 @@
                     creditDebitInfo.innerHTML = `
                         <div class="mt-3 p-3 bg-light rounded">
                             <div class="mb-3">
-                                <label class="form-label">Card Number</label>
-                                <input type="text" class="form-control" placeholder="1234 5678 9012 3456" maxlength="19">
+                                <label class="form-label">Card Number <span class="text-danger">*</span></label>
+                                <input type="text" name="OrderInput.CardNumber" class="form-control" 
+                                       placeholder="1234 5678 9012 3456" maxlength="19" required 
+                                       pattern="[0-9 ]{16,19}">
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Expiry Date</label>
-                                    <input type="text" class="form-control" placeholder="MM/YY" maxlength="5">
+                                    <label class="form-label">Expiry Date <span class="text-danger">*</span></label>
+                                    <input type="text" name="OrderInput.ExpiryDate" class="form-control" 
+                                           placeholder="MM/YY" maxlength="5" required pattern="[0-9]{2}/[0-9]{2}">
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">CVV</label>
-                                    <input type="text" class="form-control" placeholder="123" maxlength="3">
+                                    <label class="form-label">CVV <span class="text-danger">*</span></label>
+                                    <input type="text" name="OrderInput.CVV" class="form-control" 
+                                           placeholder="123" maxlength="3" required pattern="[0-9]{3}">
                                 </div>
                             </div>
                         </div>
@@ -125,8 +121,9 @@
                     creditDebitInfo.innerHTML = `
                         <div class="mt-3 p-3 bg-light rounded">
                             <div class="mb-3">
-                                <label class="form-label">GCash Number</label>
-                                <input type="text" class="form-control" placeholder="09XX XXX XXXX" maxlength="11">
+                                <label class="form-label">GCash Number <span class="text-danger">*</span></label>
+                                <input type="text" name="OrderInput.GCashNumber" class="form-control" 
+                                       placeholder="09XX XXX XXXX" maxlength="11" required pattern="[0-9]{11}">
                             </div>
                         </div>
                     `;
@@ -137,20 +134,17 @@
         });
     }
 
-    // Attach event listeners
     function attachEventListeners() {
         if (placeOrderBtn) {
             placeOrderBtn.addEventListener('click', placeOrder);
         }
     }
 
-    // Validate form inputs
     function validateForm() {
-        const inputs = document.querySelectorAll("#address input");
+        const inputs = document.querySelectorAll("#address input[required]");
         const selectedPayment = document.querySelector('input[name="payment"]:checked');
         let isValid = true;
 
-        // Check all address fields
         inputs.forEach(input => {
             if (!input.value.trim()) {
                 input.classList.add("is-invalid");
@@ -163,17 +157,49 @@
             }
         });
 
-        // Check payment method
         if (!selectedPayment) {
             alert("Please select a payment method.");
             isValid = false;
+            return false;
+        }
+
+        // Validate payment-specific fields
+        const paymentMethod = selectedPayment.value;
+        if (paymentMethod === 'Credit Card' || paymentMethod === 'Debit Card') {
+            const cardNumber = document.querySelector('input[name="OrderInput.CardNumber"]');
+            const expiryDate = document.querySelector('input[name="OrderInput.ExpiryDate"]');
+            const cvv = document.querySelector('input[name="OrderInput.CVV"]');
+
+            if (!cardNumber || !cardNumber.value.replace(/\s/g, '').match(/^\d{16}$/)) {
+                alert("Please enter a valid 16-digit card number");
+                if (cardNumber) cardNumber.focus();
+                return false;
+            }
+
+            if (!expiryDate || !expiryDate.value.match(/^\d{2}\/\d{2}$/)) {
+                alert("Please enter expiry date in MM/YY format");
+                if (expiryDate) expiryDate.focus();
+                return false;
+            }
+
+            if (!cvv || !cvv.value.match(/^\d{3}$/)) {
+                alert("Please enter a valid 3-digit CVV");
+                if (cvv) cvv.focus();
+                return false;
+            }
+        } else if (paymentMethod === 'G Cash') {
+            const gcashNumber = document.querySelector('input[name="OrderInput.GCashNumber"]');
+            if (!gcashNumber || !gcashNumber.value.replace(/\s/g, '').match(/^\d{11}$/)) {
+                alert("Please enter a valid 11-digit GCash number");
+                if (gcashNumber) gcashNumber.focus();
+                return false;
+            }
         }
 
         return isValid;
     }
 
-    // Place order
-    function placeOrder() {
+    async function placeOrder() {
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
         if (cart.length === 0) {
@@ -183,14 +209,15 @@
         }
 
         if (!validateForm()) {
-            alert("Please fill out all required fields before placing your order.");
             return;
         }
 
-        const selectedPayment = document.querySelector('input[name="payment"]:checked');
-        const paymentMethod = selectedPayment.value;
+        // Create form and submit
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/payment';
 
-        // Get customer details from the address section
+        // Add form fields
         const addressInputs = document.querySelectorAll('#address input');
         const fullName = addressInputs[0]?.value || '';
         const address = addressInputs[1]?.value || '';
@@ -198,51 +225,50 @@
         const email = addressInputs[3]?.value || '';
         const contact = addressInputs[4]?.value || '';
 
-        // Create order object
-        const order = {
-            orderId: 'ORD' + Date.now(),
-            orderDate: new Date().toISOString(),
-            customer: {
-                name: fullName,
-                address: address,
-                landmark: landmark,
-                email: email,
-                contact: contact
-            },
-            items: cart,
-            paymentMethod: paymentMethod,
-            subtotal: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-            shipping: 150,
-            total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) + 150
-        };
+        const selectedPayment = document.querySelector('input[name="payment"]:checked');
+        const paymentMethod = selectedPayment.value;
 
-        // Save order to localStorage
-        const orders = JSON.parse(localStorage.getItem("orders")) || [];
-        orders.push(order);
-        localStorage.setItem("orders", JSON.stringify(orders));
+        // Add hidden inputs
+        addHiddenField(form, 'OrderInput.FullName', fullName);
+        addHiddenField(form, 'OrderInput.Address', address);
+        addHiddenField(form, 'OrderInput.Landmark', landmark);
+        addHiddenField(form, 'OrderInput.Email', email);
+        addHiddenField(form, 'OrderInput.ContactNumber', contact);
+        addHiddenField(form, 'OrderInput.PaymentMethod', paymentMethod);
+        addHiddenField(form, 'OrderInput.CartData', JSON.stringify(cart));
 
-        // Clear cart
-        localStorage.removeItem("cart");
+        // Add payment-specific fields
+        if (paymentMethod === 'Credit Card' || paymentMethod === 'Debit Card') {
+            const cardNumber = document.querySelector('input[name="OrderInput.CardNumber"]')?.value;
+            const expiryDate = document.querySelector('input[name="OrderInput.ExpiryDate"]')?.value;
+            const cvv = document.querySelector('input[name="OrderInput.CVV"]')?.value;
 
-        // Show success message
-        const message = `
-Order Placed Successfully!
+            addHiddenField(form, 'OrderInput.CardNumber', cardNumber);
+            addHiddenField(form, 'OrderInput.ExpiryDate', expiryDate);
+            addHiddenField(form, 'OrderInput.CVV', cvv);
+        } else if (paymentMethod === 'G Cash') {
+            const gcashNumber = document.querySelector('input[name="OrderInput.GCashNumber"]')?.value;
+            addHiddenField(form, 'OrderInput.GCashNumber', gcashNumber);
+        }
 
-Order ID: ${order.orderId}
-Payment Method: ${paymentMethod}
-Total Amount: ₱${order.total.toLocaleString()}
+        // Add anti-forgery token
+        const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+        if (token) {
+            addHiddenField(form, '__RequestVerificationToken', token);
+        }
 
-Thank you for your purchase, ${fullName}!
-Your order will be delivered to: ${address}
-        `;
-
-        alert(message);
-
-        // Redirect to home
-        window.location.href = "/Index";
+        document.body.appendChild(form);
+        form.submit();
     }
 
-    // Initialize when DOM is ready
+    function addHiddenField(form, name, value) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value || '';
+        form.appendChild(input);
+    }
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initializePayment);
     } else {

@@ -6,23 +6,49 @@
 <link rel="stylesheet" href="~/css/login.css" />
 
 <div class="login-page-wrapper">
-    <div class="logincontainer">
+    <div class="logincontainer @(Model.SuccessMessage != null ? "" : (TempData["ShowRegister"] != null ? "active" : ""))">
+
+        <!-- Login Form -->
         <div class="form-box login">
-            <form action="#">
+            <form method="post" asp-page-handler="Login" id="loginForm">
                 <img src="~/src/catron.png">
                 <h1>Login</h1>
+
+                @if (Model.SuccessMessage != null)
+                {
+                    <div class="alert alert-success">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span>@Model.SuccessMessage</span>
+                    </div>
+                }
+
+                @if (Model.ErrorMessage != null && TempData["ShowRegister"] == null)
+                {
+                    <div class="alert alert-danger">
+                        <i class="fa-solid fa-exclamation-circle"></i>
+                        <span>@Model.ErrorMessage</span>
+                    </div>
+                }
+
                 <div class="input-box">
-                    <input type="text" placeholder="Username" required />
+                    <input type="text" asp-for="LoginInput.Username" id="loginUsername" placeholder="Username" required />
                     <i class="fa-solid fa-user"></i>
+                    <span asp-validation-for="LoginInput.Username" class="text-danger"></span>
                 </div>
                 <div class="input-box">
-                    <input type="password" placeholder="Password" required />
+                    <input type="password" asp-for="LoginInput.Password" id="loginPassword" placeholder="Password" required />
                     <i class="fa-solid fa-lock"></i>
+                    <span asp-validation-for="LoginInput.Password" class="text-danger"></span>
                 </div>
                 <div class="forgot-link">
                     <a href="#">Forget Password?</a>
                 </div>
-                <button type="submit" class="btn">Sign In</button>
+                <button type="submit" class="btn">
+                    <span class="btn-text">Sign In</span>
+                    <span class="btn-spinner" style="display:none;">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                    </span>
+                </button>
                 <p>Or login with social platforms</p>
                 <div class="social-icons">
                     <a href="#"><i class="fa-brands fa-google"></i></a>
@@ -32,23 +58,48 @@
                 </div>
             </form>
         </div>
+
+        <!-- Register Form -->
         <div class="form-box register">
-            <form action="#">
+            <form method="post" asp-page-handler="Register" id="registerForm">
                 <img src="~/src/catron.png">
                 <h1>Registration</h1>
+
+                @if (Model.ErrorMessage != null && TempData["ShowRegister"] != null)
+                {
+                    <div class="alert alert-danger">
+                        <i class="fa-solid fa-exclamation-circle"></i>
+                        <span>@Model.ErrorMessage</span>
+                    </div>
+                }
+
                 <div class="input-box">
-                    <input type="text" placeholder="Username" required />
+                    <input type="text" asp-for="RegisterInput.Username" id="registerUsername" placeholder="Username" required />
                     <i class="fa-solid fa-user"></i>
+                    <span asp-validation-for="RegisterInput.Username" class="text-danger"></span>
                 </div>
                 <div class="input-box">
-                    <input type="email" placeholder="Email" required />
+                    <input type="email" asp-for="RegisterInput.Email" id="registerEmail" placeholder="Email" required />
                     <i class="fa-solid fa-envelope"></i>
+                    <span asp-validation-for="RegisterInput.Email" class="text-danger"></span>
                 </div>
                 <div class="input-box">
-                    <input type="password" placeholder="Password" required />
+                    <input type="password" asp-for="RegisterInput.Password" id="registerPassword" placeholder="Password" required />
                     <i class="fa-solid fa-lock"></i>
+                    <span asp-validation-for="RegisterInput.Password" class="text-danger"></span>
+                    <small class="password-hint text-muted">Min 6 chars, 1 uppercase, 1 lowercase, 1 number, 1 special char</small>
                 </div>
-                <button type="submit" class="btn">Register</button>
+                <div class="input-box">
+                    <input type="password" asp-for="RegisterInput.ConfirmPassword" id="registerConfirmPassword" placeholder="Confirm Password" required />
+                    <i class="fa-solid fa-lock"></i>
+                    <span asp-validation-for="RegisterInput.ConfirmPassword" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn">
+                    <span class="btn-text">Register</span>
+                    <span class="btn-spinner" style="display:none;">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                    </span>
+                </button>
                 <p>Or register with social platforms</p>
                 <div class="social-icons">
                     <a href="#"><i class="fa-brands fa-google"></i></a>
@@ -58,19 +109,24 @@
                 </div>
             </form>
         </div>
+
+        <!-- Toggle Box -->
         <div class="toggle-box">
             <div class="toggle-panel toggle-left">
                 <h1>Hello, Welcome!</h1>
                 <p>Don't have an Account?</p>
-                <button class="btn register-btn">Register</button>
+                <button class="btn register-btn" type="button">Register</button>
             </div>
             <div class="toggle-panel toggle-right">
                 <h1>Welcome Back!</h1>
                 <p>Already have an Account?</p>
-                <button class="btn login-btn">Login</button>
+                <button class="btn login-btn" type="button">Login</button>
             </div>
         </div>
     </div>
 </div>
 
-<script src="~/js/login.js"></script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/login.js"></script>
+}

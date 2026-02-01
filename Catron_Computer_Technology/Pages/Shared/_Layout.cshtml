@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http
-@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@inject IHttpContextAccessor HttpContextAccessor
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,6 +59,21 @@
             margin-right: 8px;
             width: 20px;
         }
+
+        .btn-cart {
+            background: #28a745;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+            .btn-cart:hover {
+                background: #218838;
+                color: white;
+                transform: translateY(-2px);
+            }
     </style>
     @RenderSection("Styles", required: false)
 </head>
@@ -153,58 +168,53 @@
                             </div>
                         </li>
 
-                        @if (User.Identity.IsAuthenticated)
+                        @* Session-based Authentication Check *@
+                        @if (HttpContextAccessor.HttpContext.Session.GetInt32("UserId") != null)
                         {
+                            var username = HttpContextAccessor.HttpContext.Session.GetString("Username") ?? "User";
+                            var email = HttpContextAccessor.HttpContext.Session.GetString("Email") ?? "";
+                            var userInitial = username.Substring(0, 1).ToUpper();
+                            
                             <!-- Authenticated User Dropdown -->
                             <li class="nav-item dropdown user-dropdown">
-                                <a class="nav-link user-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                <a class="nav-link user-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button"
                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <div class="user-avatar">
-                                        @User.Identity.Name.Substring(0, 1).ToUpper()
+                                    <div class="user-avatar me-2">
+                                        @userInitial
                                     </div>
+                                    <span class="d-none d-lg-inline">@username</span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                     <li class="user-info">
-                                        <div class="username">@(User.Claims.FirstOrDefault(c => c.Type == "FullName")?.Value ?? User.Identity.Name)</div>
-                                        <div class="email">@User.Claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Email)?.Value</div>
+                                        <div class="username">@username</div>
+                                        <div class="email">@email</div>
                                     </li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
-                                        <a class="dropdown-item" asp-page="/Profile">
+                                        <a class="dropdown-item" href="#">
                                             <i class="fas fa-user"></i> My Profile
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" asp-page="/Orders">
+                                        <a class="dropdown-item" href="#">
                                             <i class="fas fa-shopping-bag"></i> My Orders
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" asp-page="/Wishlist">
+                                        <a class="dropdown-item" href="#">
                                             <i class="fas fa-heart"></i> Wishlist
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" asp-page="/Settings">
+                                        <a class="dropdown-item" href="#">
                                             <i class="fas fa-cog"></i> Settings
                                         </a>
                                     </li>
-                                    @if (User.IsInRole("Admin"))
-                                    {
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li>
-                                            <a class="dropdown-item" asp-page="/Admin/Dashboard">
-                                                <i class="fas fa-tachometer-alt"></i> Admin Dashboard
-                                            </a>
-                                        </li>
-                                    }
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
-                                        <form method="post" asp-page="/Login" asp-page-handler="Logout">
-                                            <button type="submit" class="dropdown-item text-danger">
-                                                <i class="fas fa-sign-out-alt"></i> Logout
-                                            </button>
-                                        </form>
+                                        <a class="dropdown-item text-danger" asp-page="/Logout">
+                                            <i class="fas fa-sign-out-alt"></i> Logout
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
@@ -213,8 +223,8 @@
                         {
                             <!-- Guest User -->
                             <li class="nav-item">
-                                <a class="nav-link user-link" asp-page="/Login">
-                                    <i class="fas fa-user"></i>
+                                <a class="nav-link user-link" asp-page="/Login" title="Login">
+                                    <i class="fas fa-user fa-lg"></i>
                                 </a>
                             </li>
                         }
@@ -222,7 +232,7 @@
                         <li class="nav-item">
                             <a class="btn btn-cart position-relative" asp-page="/checkout">
                                 <i class="fas fa-shopping-cart"></i>
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success" id="cartCount">
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cartCount">
                                     0
                                 </span>
                             </a>
@@ -298,6 +308,28 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/addCart.js" asp-append-version="true"></script>
+
+    <script>
+        // Update cart count on page load
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartCountEl = document.getElementById("cartCount");
+            if (cartCountEl) {
+                cartCountEl.textContent = count;
+                cartCountEl.style.display = count > 0 ? "inline-block" : "none";
+            }
+        }
+
+        // Call on page load
+        updateCartCount();
+
+        // Listen for storage changes
+        window.addEventListener('storage', updateCartCount);
+
+        // Listen for custom cart update event
+        window.addEventListener('cartUpdated', updateCartCount);
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
